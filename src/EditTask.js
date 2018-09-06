@@ -1,35 +1,32 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-class AddTask extends Component {
-  handelAddTask = e => {
+class EditTask extends Component {
+  handelUpdateTask = e => {
     e.preventDefault();
-    const taskName = this.getTaskName.value;
+    const updatedTaskName = this.getUpdatedTaskName.value;
     const data = {
       id: new Date(),
-      taskName,
-      editing: false
+      updatedTaskName
     };
     this.props.dispatch({
-      type: "ADD_TASK",
+      type: "UPDATE_TASK",
       data
     });
-    this.getTaskName.value = "";
   };
-
-  render() {
+  rennder() {
     return (
-      <div className="col-sm-12">
-        <h1 className="text-center">Task List</h1>
+      <div className="col-sm-12" key={this.props.taskl.id}>
+        <h1 className="text-center">Update Task</h1>
 
-        <form className="input-group" onSubmit={this.handelAddTask}>
+        <form className="input-group" onSubmit={this.handelUpdateTask}>
           <input
             type="text"
             className="form-control"
-            placeholder="Task Name"
-            name="todo-input-box"
+            name="todo-update-box"
             required="true"
-            ref={input => (this.getTaskName = input)}
+            defaultValue={this.props.taskl.taskName}
+            ref={input => (this.getUpdatedTaskName = input)}
           />
           <div className="input-group-append">
             <button
@@ -37,7 +34,7 @@ class AddTask extends Component {
               btn-outline-primary"
               type="submit"
             >
-              Save
+              Update
             </button>
           </div>
         </form>
@@ -46,4 +43,4 @@ class AddTask extends Component {
   }
 }
 
-export default connect()(AddTask);
+export default connect()(EditTask);
